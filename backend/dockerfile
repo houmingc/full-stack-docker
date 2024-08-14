@@ -1,6 +1,9 @@
 # Base image
-FROM node
+# Use Node.js LTS version
+FROM node:18-alpine
 
+# Set environment variable to fix OpenSSL issues
+ENV NODE_OPTIONS="--openssl-legacy-provider"
 # Make folder to put our files in
 RUN mkdir -p /usr/src/app
 RUN mkdir -p /usr/src/app/backend

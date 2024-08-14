@@ -16,3 +16,23 @@ This repo contains an example of dockerizing a full stack application. Please ha
  - DB - Postgres
 
  
+Network Configuration: Using links is deprecated in favor of Docker's built-in network capabilities. By default, Docker Compose will create a network that all services are connected to, allowing them to communicate with each other by service name 
+
+
+want to persist the database data, you should mount a volume for the db service. Without this, all data will be lost when the container is restarted.
+ Ensure that your backend service can connect to the database. You may need to pass environment variables such as DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, and DB_NAME to the backend service
+
+Key Points:
+Directory Structure:
+
+Frontend: Typically listens on port 3000 (as per your docker-compose.yml).
+Backend: Typically listens on port 8080 (as per your docker-compose.yml).
+Working Directory:
+
+Both Dockerfiles use /usr/src/app as the working directory, which is a common convention.
+EXPOSE:
+
+The frontend exposes port 3000, and the backend exposes port 8080, aligning with the services in your docker-compose.yml
+
+
+Tons of error, cannot help

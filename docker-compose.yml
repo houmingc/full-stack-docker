@@ -1,27 +1,38 @@
-version: '3'
+version: "3"
 
 services:
-  frontend: # Name of our service
-    build: ./frontend # path to dockerfile
-    ports: # Port binding to host from docker container
-      - "3000:3000" # Bind port 3000 of host to 3000 of container
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
     container_name: frontend-docker
-    restart: always # What to do if container crashes
-    links:
+    restart: always
+    depends_on:
       - backend
 
   backend:
     build: ./backend
-    ports: 
+    ports:
       - "8080:8080"
     container_name: backend-docker
     restart: always
-    links: 
+    depends_on:
       - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=admin123
+      - DB_PASSWORD=admin123
+      - DB_NAME=admin123
 
   db:
     image: postgres:11.6-alpine
-    ports: 
+    ports:
       - "5432:5432"
     container_name: database-docker
     restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
